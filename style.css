@@ -33,11 +33,15 @@ input::-webkit-inner-spin-button {
     margin: 10px 10px;
 
     border-radius: 50px;
-    box-shadow: black 3px 3px 2px;
+    box-shadow: black 4px 4px 2px;
 
     font-size: 26px;
     font-weight: bold;
 }
-.numbers {
+.allButtons {
     display: flex;
+    flex-wrap: wrap;
+
+    width: 400px;
+    height: 400px;
 }
