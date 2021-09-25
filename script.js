@@ -10,5 +10,5 @@ calcButtons.forEach(sign => {
     button.className = 'button';
     button.innerHTML = sign;
     numbers.appendChild(button);
-    console.log(button);
 });
+
