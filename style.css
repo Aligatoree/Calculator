@@ -1,20 +1,47 @@
 .calc {
     width: 400px;
-    height: 560px;
+    height: 600px;
     margin: 60px auto;
-
+    position: relative;
 
     background-color: darkgray;
     border: black 2px solid;
     border-radius: 10px;
     box-shadow: black 10px 10px 5px;
 }
+.outputNum {
+    position: absolute;
+    height: 30px;
+    width: 340px;
+    left: 30px;
+    top: 50px;
+
+    text-align: right;
+    font-size: 26px;
+    font-weight: bold;
+    font-family: Arial;
+    color: dimgrey;
+}
+.outputSign{
+    position: absolute;
+    display: block;
+
+    left: 355px;
+    top: 88px;
+
+    text-align: right;
+    font-size: 26px;
+    font-weight: bold;
+    font-family: Arial;
+    color: dimgrey;
+}
 .input {
     display: block;
-    height: 80px;
+    height: 50px;
     width: 340px;
     margin: 30px auto;
-    padding: 0px 10px;
+    padding: 0px 15px;
+    padding-top: 80px;
 
     text-align: right;
     font-size: 26px;
@@ -49,3 +76,4 @@ input[type=number]::-webkit-outer-spin-button {
     width: 400px;
     height: 400px;
 }
+

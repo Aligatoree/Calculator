@@ -6,8 +6,10 @@ let signs = [
 let allButtons = document.getElementById('allButtons');
 let info = document.getElementById('info');
 let input = document.getElementById('enter');
-let firstNumber = '';
+let outputNum = document.getElementById('outputNum');
+let outputSign = document.getElementById('outputSign');
 let operator = '';
+let enterNumber = '';
 let result = '';
 
 signs.forEach(sign => {
@@ -30,15 +32,18 @@ function onButtonClick(event) {
             operator = '';
             input.placeholder = 0;
             result = '';
+            outputNum.textContent = '';
+            outputSign.textContent = '';
             break;
         case '+':
             if (enterNumber != '') {
                 result = equal(result, enterNumber);
                 enterNumber = '';
                 input.value = '';
-                input.placeholder = result;
+                input.placeholder = 0;
                 operator = '+';
-                break;
+                outputSign.textContent = operator;
+                outputNum.textContent = result;
             }
             break;
         case '-':
@@ -46,8 +51,10 @@ function onButtonClick(event) {
                 result = equal(result, enterNumber);
                 enterNumber = '';
                 input.value = '';
-                input.placeholder = result;
+                input.placeholder = 0;
                 operator = '-';
+                outputSign.textContent = operator;
+                outputNum.textContent = result;
             }
             break;
         case '*':
@@ -55,8 +62,10 @@ function onButtonClick(event) {
                 result = equal(result, enterNumber);
                 enterNumber = '';
                 input.value = '';
-                input.placeholder = result;
+                input.placeholder = 0;
                 operator = '*';
+                outputSign.textContent = operator;
+                outputNum.textContent = result;
             }
             break;
         case '/':
@@ -64,8 +73,10 @@ function onButtonClick(event) {
                 result = equal(result, enterNumber);
                 enterNumber = '';
                 input.value = '';
-                input.placeholder = result;
+                input.placeholder = 0;
                 operator = '/';
+                outputSign.textContent = operator;
+                outputNum.textContent = result;
             }
             break;
         case '1':
@@ -97,6 +108,8 @@ function equal(first, second) {
     if (first === '') {
         return second;
     }
+    outputSign.textContent = '';
+    outputNum.textContent = '';
     switch (operator) {
         case '+':
             return first + second;
@@ -109,7 +122,8 @@ function equal(first, second) {
                 input.placeholder = 'Error';
                 input.value = '';
                 enterNumber = '';
-                secondNumber = 0;
+                outputSign.textContent = '';
+                outputNum.textContent = '';
                 return 0;
             } else
                 return first / second;
