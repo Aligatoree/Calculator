@@ -7,7 +7,6 @@ let allButtons = document.getElementById('allButtons');
 let info = document.getElementById('info');
 let input = document.getElementById('enter');
 let firstNumber = '';
-let secondNumber = '';
 let operator = '';
 let result = '';
 
@@ -28,7 +27,6 @@ function onButtonClick(event) {
         case 'C':
             input.value = '';
             enterNumber = '';
-            secondNumber = '';
             operator = '';
             input.placeholder = 0;
             result = '';
@@ -36,7 +34,7 @@ function onButtonClick(event) {
         case '+':
             if (enterNumber != '') {
                 result = equal(result, enterNumber);
-                enterNumber = +input.value;
+                enterNumber = '';
                 input.value = '';
                 input.placeholder = result;
                 operator = '+';
@@ -46,7 +44,7 @@ function onButtonClick(event) {
         case '-':
             if (enterNumber != '') {
                 result = equal(result, enterNumber);
-                enterNumber = +input.value;
+                enterNumber = '';
                 input.value = '';
                 input.placeholder = result;
                 operator = '-';
@@ -55,7 +53,7 @@ function onButtonClick(event) {
         case '*':
             if (enterNumber != '') {
                 result = equal(result, enterNumber);
-                enterNumber = +input.value;
+                enterNumber = '';
                 input.value = '';
                 input.placeholder = result;
                 operator = '*';
@@ -64,7 +62,7 @@ function onButtonClick(event) {
         case '/':
             if (enterNumber !== '' && enterNumber !== 0) {
                 result = equal(result, enterNumber);
-                enterNumber = +input.value;
+                enterNumber = '';
                 input.value = '';
                 input.placeholder = result;
                 operator = '/';
@@ -80,6 +78,7 @@ function onButtonClick(event) {
         case '8':
         case '9':
         case '0':
+            if (input.value.length > 20) input.value = input.value.slice(0, input.maxLength);
             input.value += +num;
             enterNumber = +input.value;
             break;
@@ -91,14 +90,8 @@ function onButtonClick(event) {
                 result = '';
                 operator = '';
             }
-
-
     }
-
-
 };
-
-
 
 function equal(first, second) {
     if (first === '') {
@@ -120,5 +113,7 @@ function equal(first, second) {
                 return 0;
             } else
                 return first / second;
+        case '':
+            return second;
     }
 }

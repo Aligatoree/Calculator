@@ -8,8 +8,11 @@
 </head>
 <body>
 <div class="calc" id="calc">
-    <input type="number" class="input" id="enter" placeholder="0" onkeydown="javascript: return event.keyCode === 8 ||
-event.keyCode === 46 ? true : !isNaN(Number(event.key))">
+    <input type="number" class="input" id="enter" placeholder="0"
+           onkeydown="javascript:
+                      if (this.value.length > 20) this.value = this.value.slice(0, this.maxLength);
+                      return event.keyCode === 8 || event.keyCode === 46 ? true : !isNaN(Number(event.key))"
+    >
     <div class="allButtons" id="allButtons">
     </div>
 </div>
