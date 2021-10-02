@@ -1,10 +1,10 @@
 let signs = [
-    '1','2','3','+',
-    '4','5','6','-',
-    '7','8','9','*',
-    'C','0','=','/'];
+    'CE','C','+/-','+',
+    '1','2','3','-',
+    '4','5','6','*',
+    '7','8','9','/',
+    '','0','.','='];
 let allButtons = document.getElementById('allButtons');
-let info = document.getElementById('info');
 let input = document.getElementById('enter');
 let outputNum = document.getElementById('outputNum');
 let outputSign = document.getElementById('outputSign');
@@ -26,7 +26,7 @@ document.querySelectorAll('button').forEach(function(button) {
 function onButtonClick(event) {
     let num = event.target.innerHTML;
     switch (event.target.innerHTML) {
-        case 'C':
+        case 'CE':
             input.value = '';
             enterNumber = '';
             operator = '';
@@ -34,6 +34,26 @@ function onButtonClick(event) {
             result = '';
             outputNum.textContent = '';
             outputSign.textContent = '';
+            break;
+        case 'C':
+            input.value = input.value.slice(0,(input.value.length-1));
+            enterNumber = +input.value;
+            break;
+        case '+/-':
+            enterNumber = +input.value * (-1);
+            input.value = +input.value * (-1);
+            break;
+        case '.':
+            let value = input.value;
+            if (value.length > 1) {
+                value = value.substring(0, value.length - 1) + '.' + value.substring(value.length - 1, value.length);
+            } else if (value == '') {
+                input.value = '0.';
+            } else {
+                value = value + '.';
+            }
+            input.value = value;
+            enterNumber = value;
             break;
         case '+':
             if (enterNumber != '') {
@@ -96,7 +116,7 @@ function onButtonClick(event) {
         case '=':
             if (enterNumber != '') {
                 enterNumber = equal(result, enterNumber);
-                input.value = '';
+                input.value = enterNumber;
                 input.placeholder = enterNumber;
                 result = '';
                 operator = '';
