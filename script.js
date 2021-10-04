@@ -25,7 +25,7 @@ let input = document.getElementById("enter");
 let outputNum = document.getElementById("outputNum");
 let outputSign = document.getElementById("outputSign");
 let operator = "";
-let enterNumber = "";
+let number = "";
 let result = "";
 let fraction = false;
 
@@ -45,20 +45,25 @@ function onButtonClick(event) {
   switch (event.target.innerHTML) {
     case "CE":
       input.value = "";
-      enterNumber = "";
+      number = "";
       operator = "";
       input.placeholder = 0;
       result = "";
+      fraction = false;
       outputNum.textContent = "";
       outputSign.textContent = "";
       break;
     case "C":
       input.value = input.value.slice(0, input.value.length - 1);
-      enterNumber = +input.value;
+      number = +input.value;
       break;
     case "+/-":
-      enterNumber = +input.value * -1;
-      input.value = +input.value * -1;
+      if (input.value === "" || 0) {
+        input.value = "-0";
+        number = 0;
+      }
+      number *= -1;
+      input.value = number;
       break;
     case ".":
       let value = input.value;
@@ -70,13 +75,13 @@ function onButtonClick(event) {
       }
       value = value + ".0";
       fraction = true;
-      input.value = value;
-      enterNumber = value;
+      number = value;
+      input.value = number;
       break;
     case "+":
-      if (enterNumber != "") {
-        result = equal(result, enterNumber);
-        enterNumber = "";
+      if (number !== "") {
+        result = equal(result, number);
+        number = "";
         input.value = "";
         input.placeholder = 0;
         operator = "+";
@@ -85,20 +90,22 @@ function onButtonClick(event) {
       }
       break;
     case "-":
-      if (enterNumber != "") {
-        result = equal(result, enterNumber);
-        enterNumber = "";
+      if (number !== "") {
+        result = equal(result, number);
+        number = "";
         input.value = "";
         input.placeholder = 0;
         operator = "-";
         outputSign.textContent = operator;
         outputNum.textContent = result;
+      } else {
+        input.value = -0;
       }
       break;
     case "*":
-      if (enterNumber != "") {
-        result = equal(result, enterNumber);
-        enterNumber = "";
+      if (number !== "") {
+        result = equal(result, number);
+        number = "";
         input.value = "";
         input.placeholder = 0;
         operator = "*";
@@ -107,9 +114,9 @@ function onButtonClick(event) {
       }
       break;
     case "/":
-      if (enterNumber !== "" && enterNumber !== 0) {
-        result = equal(result, enterNumber);
-        enterNumber = "";
+      if (number !== "" && number !== 0) {
+        result = equal(result, number);
+        number = "";
         input.value = "";
         input.placeholder = 0;
         operator = "/";
@@ -136,13 +143,20 @@ function onButtonClick(event) {
         value = value.slice(0, input.value.indexOf(".")) + "." + num;
         input.value = value;
       }
-      enterNumber = +input.value;
+      if (
+        input.value.length > 1 &&
+        input.value[0] === "0" &&
+        !(input.value[1] === ".")
+      ) {
+        input.value = input.value.slice(1);
+      }
+      number = +input.value;
       break;
     case "=":
-      if (enterNumber != "") {
-        enterNumber = equal(result, enterNumber);
-        input.value = enterNumber;
-        input.placeholder = enterNumber;
+      if (number != "") {
+        number = equal(result, number);
+        input.value = number;
+        input.placeholder = number;
         result = "";
         operator = "";
       }
@@ -166,7 +180,7 @@ function equal(first, second) {
       if (second == 0) {
         input.placeholder = "Error";
         input.value = "";
-        enterNumber = "";
+        number = "";
         outputSign.textContent = "";
         outputNum.textContent = "";
         return 0;

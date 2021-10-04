@@ -17,8 +17,7 @@
           id="enter"
           placeholder="0"
           onkeydown="javascript:
-                      if (this.value.length > 20) this.value = this.value.slice(0, this.maxLength);
-                      return event.keyCode === 8 || event.keyCode === 46 ? true : !isNaN(Number(event.key))"
+                      if (this.value.length > 20) this.value = this.value.slice(0, this.maxLength);"
         />
       </div>
       <div class="allButtons" id="allButtons"></div>
