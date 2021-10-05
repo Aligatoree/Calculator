@@ -1,78 +1,77 @@
-.calc {
+* {
+  font-size: 26px;
+  font-weight: bold;
+  font-family: Arial;
+  text-align: right;
+}
+body {
+  --body-color: whitesmoke;
+  --calc-color: darkgray;
+
+  background-color: var(--body-color);
+}
+.corner {
+  border: black 2px solid;
+  border-radius: 10px;
+  box-shadow: black 3px 3px 2px;
+}
+#calc {
   width: 400px;
   height: 600px;
   margin: 60px auto;
   position: relative;
 
-  background-color: darkgray;
-  border: black 2px solid;
-  border-radius: 10px;
-  box-shadow: black 10px 10px 5px;
+  background-color: var(--calc-color);
 }
-.outputNum {
-  position: absolute;
-  height: 30px;
-  width: 340px;
-  left: 30px;
-  top: 50px;
 
-  text-align: right;
-  font-size: 26px;
-  font-weight: bold;
-  font-family: Arial;
-  color: dimgrey;
-}
-.outputSign {
-  position: absolute;
-  display: block;
-
-  left: 355px;
-  top: 88px;
-
-  text-align: right;
-  font-size: 26px;
-  font-weight: bold;
-  font-family: Arial;
-  color: dimgrey;
-}
-.input {
+#enter {
   display: block;
   height: 50px;
   width: 340px;
   margin: 30px auto;
   padding: 0px 15px;
   padding-top: 80px;
+}
+.button {
+  width: 80px;
+  height: 60px;
+  margin: 10px 10px;
 
-  text-align: right;
-  font-size: 26px;
-  font-weight: bold;
-  font-family: Arial;
+  text-align: center;
+}
+.button:active {
+  position: relative;
+  background-color: gray;
+  left: 2px;
+  top: 2px;
+  box-shadow: black 1px 1px 2px;
+}
+#keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto auto;
+  width: 400px;
+  height: 400px;
+}
+#outputNum {
+  position: absolute;
+  height: 30px;
+  width: 340px;
+  left: 30px;
+  top: 50px;
 
-  border-radius: 10px;
-  box-shadow: black 3px 3px 2px;
+  color: dimgrey;
+}
+#outputSign {
+  position: absolute;
+  display: block;
+  left: 355px;
+  top: 88px;
+
+  color: dimgrey;
 }
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
-.button {
-  display: block;
-  width: 80px;
-  height: 60px;
-  margin: 10px 10px;
-
-  border-radius: 50px;
-  box-shadow: black 4px 4px 2px;
-
-  font-size: 26px;
-  font-weight: bold;
-  font-family: Arial;
-}
-.allButtons {
-  display: flex;
-  flex-wrap: wrap;
-
-  width: 400px;
-  height: 400px;
 }

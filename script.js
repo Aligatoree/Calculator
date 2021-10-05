@@ -15,12 +15,11 @@ let signs = [
   "8",
   "9",
   "/",
-  "",
+  "💡",
   "0",
   ".",
   "=",
 ];
-let allButtons = document.getElementById("allButtons");
 let input = document.getElementById("enter");
 let outputNum = document.getElementById("outputNum");
 let outputSign = document.getElementById("outputSign");
@@ -28,12 +27,15 @@ let operator = "";
 let number = "";
 let result = "";
 let fraction = false;
+let body = document.querySelector("body");
+let theme = "light";
 
 signs.forEach((sign) => {
   let button = document.createElement("button");
-  button.className = "button";
+  let keyboard = document.getElementById("keyboard");
+  button.className = "button corner";
   button.innerHTML = sign;
-  allButtons.appendChild(button);
+  keyboard.appendChild(button);
 });
 
 document.querySelectorAll("button").forEach(function (button) {
@@ -47,7 +49,6 @@ function onButtonClick(event) {
       input.value = "";
       number = "";
       operator = "";
-      input.placeholder = 0;
       result = "";
       fraction = false;
       outputNum.textContent = "";
@@ -81,47 +82,29 @@ function onButtonClick(event) {
     case "+":
       if (number !== "") {
         result = equal(result, number);
-        number = "";
-        input.value = "";
-        input.placeholder = 0;
         operator = "+";
-        outputSign.textContent = operator;
-        outputNum.textContent = result;
+        doAfterCalc();
       }
       break;
     case "-":
       if (number !== "") {
         result = equal(result, number);
-        number = "";
-        input.value = "";
-        input.placeholder = 0;
         operator = "-";
-        outputSign.textContent = operator;
-        outputNum.textContent = result;
-      } else {
-        input.value = -0;
+        doAfterCalc();
       }
       break;
     case "*":
       if (number !== "") {
         result = equal(result, number);
-        number = "";
-        input.value = "";
-        input.placeholder = 0;
         operator = "*";
-        outputSign.textContent = operator;
-        outputNum.textContent = result;
+        doAfterCalc();
       }
       break;
     case "/":
-      if (number !== "" && number !== 0) {
+      if (number !== "") {
         result = equal(result, number);
-        number = "";
-        input.value = "";
-        input.placeholder = 0;
         operator = "/";
-        outputSign.textContent = operator;
-        outputNum.textContent = result;
+        doAfterCalc();
       }
       break;
     case "1":
@@ -137,12 +120,12 @@ function onButtonClick(event) {
       if (input.value.length > 20)
         input.value = input.value.slice(0, input.maxLength);
       input.value += +num;
-      if (fraction === true) {
+      if (fraction === true && !(input.value === "")) {
         fraction = false;
         let value = input.value;
         value = value.slice(0, input.value.indexOf(".")) + "." + num;
         input.value = value;
-      }
+      } else fraction = false;
       if (
         input.value.length > 1 &&
         input.value[0] === "0" &&
@@ -152,11 +135,13 @@ function onButtonClick(event) {
       }
       number = +input.value;
       break;
+    case "💡":
+      switchTheme();
+      break;
     case "=":
-      if (number != "") {
+      if (number !== "") {
         number = equal(result, number);
         input.value = number;
-        input.placeholder = number;
         result = "";
         operator = "";
       }
@@ -177,8 +162,7 @@ function equal(first, second) {
     case "*":
       return first * second;
     case "/":
-      if (second == 0) {
-        input.placeholder = "Error";
+      if (second === 0) {
         input.value = "";
         number = "";
         outputSign.textContent = "";
@@ -190,6 +174,23 @@ function equal(first, second) {
   }
 }
 function isInteger(num) {
-  if (num.indexOf(".") === -1) return true;
-  else return false;
+  return num.indexOf(".") === -1;
+}
+function doAfterCalc() {
+  number = "";
+  input.value = "";
+  outputSign.textContent = operator;
+  outputNum.textContent = result;
+  fraction = false;
+}
+function switchTheme() {
+  if (theme === "dark") {
+    theme = "light";
+    body.style.setProperty("--body-color", "whitesmoke");
+    body.style.setProperty("--calc-color", "darkgrey");
+  } else {
+    theme = "dark";
+    body.style.setProperty("--body-color", "darkgrey");
+    body.style.setProperty("--calc-color", "grey");
+  }
 }

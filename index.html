@@ -7,20 +7,20 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="calc" id="calc">
+    <div class="corner" id="calc">
       <div>
-        <div class="outputNum" id="outputNum"></div>
-        <div class="outputSign" id="outputSign"></div>
+        <div id="outputNum"></div>
+        <div id="outputSign"></div>
         <input
           type="number"
-          class="input"
+          class="corner"
           id="enter"
           placeholder="0"
           onkeydown="javascript:
                       if (this.value.length > 20) this.value = this.value.slice(0, this.maxLength);"
         />
       </div>
-      <div class="allButtons" id="allButtons"></div>
+      <div id="keyboard"></div>
     </div>
     <script src="script.js"></script>
   </body>
