@@ -28,7 +28,9 @@ let number = "";
 let result = "";
 let fraction = false;
 let body = document.querySelector("body");
-let theme = "light";
+let theme = localStorage.getItem("theme") || "light";
+
+setTheme();
 
 signs.forEach((sign) => {
   let button = document.createElement("button");
@@ -137,6 +139,7 @@ function onButtonClick(event) {
       break;
     case "💡":
       switchTheme();
+      setTheme();
       break;
     case "=":
       if (number !== "") {
@@ -186,11 +189,18 @@ function doAfterCalc() {
 function switchTheme() {
   if (theme === "dark") {
     theme = "light";
-    body.style.setProperty("--body-color", "whitesmoke");
-    body.style.setProperty("--calc-color", "darkgrey");
+    localStorage.setItem("theme", "light");
   } else {
     theme = "dark";
+    localStorage.setItem("theme", "dark");
+  }
+}
+function setTheme() {
+  if (theme === "dark") {
     body.style.setProperty("--body-color", "darkgrey");
     body.style.setProperty("--calc-color", "grey");
+  } else {
+    body.style.setProperty("--body-color", "whitesmoke");
+    body.style.setProperty("--calc-color", "darkgrey");
   }
 }
