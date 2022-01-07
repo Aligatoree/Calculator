@@ -7,17 +7,16 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="corner" id="calc">
+    <div class="border" id="calc">
       <div>
         <div id="outputNum"></div>
         <div id="outputSign"></div>
         <input
-          type="number"
-          class="corner"
+          type="text"
+          class="border"
           id="enter"
           placeholder="0"
-          onkeydown="javascript:
-                      if (this.value.length > 20) this.value = this.value.slice(0, this.maxLength);"
+		  maxLength="21"
         />
       </div>
       <div id="keyboard"></div>

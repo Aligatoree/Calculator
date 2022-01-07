@@ -26,33 +26,71 @@ let outputSign = document.getElementById("outputSign");
 let operator = "";
 let number = "";
 let result = "";
-let fraction = false;
 let body = document.querySelector("body");
+let keyboard = document.getElementById("keyboard");
 let theme = localStorage.getItem("theme") || "light";
 
 setTheme();
 
 signs.forEach((sign) => {
-  let button = document.createElement("button");
-  let keyboard = document.getElementById("keyboard");
-  button.className = "button corner";
+  let button = document.createElement("button");  
+  button.className = "button border";
   button.innerHTML = sign;
-  keyboard.appendChild(button);
-});
-
-document.querySelectorAll("button").forEach(function (button) {
+  keyboard.appendChild(button);  
   button.addEventListener("click", onButtonClick);
 });
 
+document.querySelector('#enter').addEventListener('input', function(){
+    this.value = this.value.replace(/[^0-9]/g, '');	
+    if (this.value.length > 20) this.value = this.value.slice(0, 20);
+});
+
+const isMobile = /Mobile|webOS|BlackBerry|IEMobile|MeeGo|mini|Fennec|Windows Phone|Android|iP(ad|od|hone)/i.test(navigator.userAgent);
+if (isMobile) input.setAttribute('readonly', 'readonly')
+
+input.addEventListener('keyup', function(event) {
+	let key = "";
+	console.log(event.key);
+	switch(event.key) {
+		case "+":
+			key = "+";
+			onButtonClick(key);
+			break;
+		case "-":
+			key = "-";
+			onButtonClick(key);
+			break;
+		case "*":
+			key = "*";
+			onButtonClick(key);
+			break;
+		case "/":
+			key = "/";
+			onButtonClick(key);
+			break;
+		case "=":
+		case "Enter":
+			key = "=";
+			onButtonClick(key);
+			break;
+		case ".":
+			key = ".";
+			onButtonClick(key);
+	}
+});
+
 function onButtonClick(event) {
-  let num = event.target.innerHTML;
-  switch (event.target.innerHTML) {
+	let num = "";
+	if(typeof event === "string") {
+		num = event;
+		} else {
+		num = event.target.innerHTML;}
+  switch (num) {
     case "CE":
       input.value = "";
       number = "";
       operator = "";
       result = "";
-      fraction = false;
       outputNum.textContent = "";
       outputSign.textContent = "";
       break;
@@ -61,10 +99,7 @@ function onButtonClick(event) {
       number = +input.value;
       break;
     case "+/-":
-      if (input.value === "" || 0) {
-        input.value = "-0";
-        number = 0;
-      }
+      if (input.value === "" || 0) break;      
       number *= -1;
       input.value = number;
       break;
@@ -72,38 +107,37 @@ function onButtonClick(event) {
       let value = input.value;
       if (!isInteger(value)) break;
       if (value === "") {
-        input.value = "0.0";
-        fraction = true;
+        input.value = "0.";
         break;
       }
-      value = value + ".0";
-      fraction = true;
+      value = value + ".";
       number = value;
       input.value = number;
       break;
     case "+":
-      if (number !== "") {
+      if (number !== "" || input.value !== "") {
+		
         result = equal(result, number);
         operator = "+";
         doAfterCalc();
       }
       break;
     case "-":
-      if (number !== "") {
+      if (number !== "" || input.value !== "") {
         result = equal(result, number);
         operator = "-";
         doAfterCalc();
       }
       break;
     case "*":
-      if (number !== "") {
+      if (number !== "" || input.value !== "") {
         result = equal(result, number);
         operator = "*";
         doAfterCalc();
       }
       break;
     case "/":
-      if (number !== "") {
+      if (number !== "" || input.value !== "") {
         result = equal(result, number);
         operator = "/";
         doAfterCalc();
@@ -120,21 +154,8 @@ function onButtonClick(event) {
     case "9":
     case "0":
       if (input.value.length > 20)
-        input.value = input.value.slice(0, input.maxLength);
+        input.value = input.value.slice(0, 20);
       input.value += +num;
-      if (fraction === true && !(input.value === "")) {
-        fraction = false;
-        let value = input.value;
-        value = value.slice(0, input.value.indexOf(".")) + "." + num;
-        input.value = value;
-      } else fraction = false;
-      if (
-        input.value.length > 1 &&
-        input.value[0] === "0" &&
-        !(input.value[1] === ".")
-      ) {
-        input.value = input.value.slice(1);
-      }
       number = +input.value;
       break;
     case "💡":
@@ -142,21 +163,24 @@ function onButtonClick(event) {
       setTheme();
       break;
     case "=":
-      if (number !== "") {
+      if (number !== "" || input.value !== "") {
         number = equal(result, number);
         input.value = number;
         result = "";
         operator = "";
+		outputSign.textContent = "";
+		outputNum.textContent = "";
       }
   }
 }
 
+	
+
 function equal(first, second) {
-  if (first === "") {
-    return second;
-  }
-  outputSign.textContent = "";
-  outputNum.textContent = "";
+    if (first === "") {
+	second = +input.value;
+	return second;}
+  if (second === "") {second = +input.value};
   switch (operator) {
     case "+":
       return first + second;
@@ -184,7 +208,6 @@ function doAfterCalc() {
   input.value = "";
   outputSign.textContent = operator;
   outputNum.textContent = result;
-  fraction = false;
 }
 function switchTheme() {
   if (theme === "dark") {
