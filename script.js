@@ -60,6 +60,15 @@ input.addEventListener('keydown', function(event) {
 		key = ".";
 		onButtonClick(key);
 		break;
+		case "Backspace":
+			key = "C";
+			onButtonClick(key);
+			break;
+		case "Escape":	
+		case "Delete":
+			key = "CE";
+			onButtonClick(key);
+			break;
 		case "1":
 		case "2":
 		case "3":
@@ -99,14 +108,16 @@ function onButtonClick(event) {
       input.value = +input.value.slice(0, input.value.length - 1);
       break;
     case ".":
-      let value = input.value;
-      if (!isInteger(value)) break;
-      if (value === "") {
-        input.value = "0.";
-        break;
+      if (!isInteger(input.value)) break;
+	  if (input.value === "-"){
+		  input.value = "-0."
+		  break;
+	  }
+      if (input.value === "") {
+          input.value = "0.";
+          break;
       }
-      value = value + ".";
-      input.value = value;
+      input.value += ".";
       break;
     case "+":
       if (input.value !== "") {		
@@ -116,11 +127,18 @@ function onButtonClick(event) {
       }
       break;
     case "-":
+	  if (input.value === "-"){
+		  input.value = "";
+		  break;
+	  }
       if (input.value !== "") {
         result = equal(result, input.value);
         operator = "-";
         doAfterCalc();
-      }
+      } else {
+		input.value = "-";
+		break;
+	  }
       break;
     case "*":
       if (input.value !== "") {
@@ -172,6 +190,7 @@ function onButtonClick(event) {
 	
 
 function equal(first, second) {
+	if (second === ("-" || "" || "0.")) {second = "0";}
     if (first === "") return +second;
 	first = +first;
 	second = +second;
@@ -187,7 +206,8 @@ function equal(first, second) {
         input.value = "";
         outputSign.textContent = "";
         outputNum.textContent = "";
-        return 0;
+		alert("Ошибка! Деление на 0!");
+        return "";
       } else return first / second;
     case "":
       return second;
