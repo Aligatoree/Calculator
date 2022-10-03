@@ -11,11 +11,7 @@ You can use both the keyboard and the mouse to enter data into the calculator.
 * Division
 * Dark theme
 
-## 🚀 How to use 
-
-1. Download the repository files
-2. Run "index.html"
-3. Use!
+## [🚀 Link](https://aligatoree.github.io/Calculator/)
 
 ## 🔧 Built With
 
